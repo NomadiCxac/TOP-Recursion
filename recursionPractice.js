@@ -349,8 +349,11 @@ function fibsRec (n) {
 
 console.log(fibsRec(10));
 
+
+
 let unsortedArray = [2, 9, 8, 4, 343, 85, 5, 7];
-// let unsortedArray = [2, 9, 4, 8];
+
+
 
 function splitArrayInHalf(array) {
     let midpoint = Math.ceil(array.length / 2); // Using Math.ceil ensures that if the length is odd, the first half will have one more element than the second half.
