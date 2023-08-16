@@ -421,3 +421,7 @@ function mergeSort(array) {
 // console.log(rightTest)
 // console.log(merge(leftTest, rightTest));
 console.log(mergeSort(unsortedArray));
+
+
+// Extra Assignment : For more attempts at recursion try the first 5 problems in Project Euler
+
