@@ -7,7 +7,7 @@ function sumToForLoop (num) {
     console.log(sum);
 }
 
-sumToForLoop(10);
+// sumToForLoop(10);
 
 function sumToForRecursion(num) {
 
@@ -21,7 +21,7 @@ function sumToForRecursion(num) {
     
 }
 
-console.log(sumToForRecursion(10000));
+// console.log(sumToForRecursion(10000));
 
 function sumToForAriPro(num) {
 
@@ -39,7 +39,7 @@ function sumToForAriPro(num) {
 
 }
 
-console.log(sumToForAriPro(10));
+// console.log(sumToForAriPro(10));
 
 function factorial(num) {
 
@@ -50,7 +50,7 @@ function factorial(num) {
     }
 }
 
-console.log(factorial(5));
+// console.log(factorial(5));
 
 function fib (num) {
 
@@ -66,7 +66,7 @@ function fib (num) {
     return fib2;
 }
 
-console.log(fib(100));
+// console.log(fib(100));
 
 let list = {
     value: 1,
@@ -347,7 +347,7 @@ function fibsRec (n) {
 
 }
 
-console.log(fibsRec(10));
+// console.log(fibsRec(10));
 
 
 
@@ -420,8 +420,251 @@ function mergeSort(array) {
 // console.log(leftTest)
 // console.log(rightTest)
 // console.log(merge(leftTest, rightTest));
-console.log(mergeSort(unsortedArray));
+// console.log(mergeSort(unsortedArray));
 
 
 // Extra Assignment : For more attempts at recursion try the first 5 problems in Project Euler
 
+function threeOrFive (n) {
+
+    if (n == 3) {
+        return n;
+    }
+
+    if (n % 3 == 0 || n % 5 == 0) {
+        return n + (threeOrFive(n - 1)); 
+    } else {
+        return (threeOrFive(n - 1));
+    }
+
+
+}
+
+// console.log(threeOrFive(999));
+
+// My solution
+function evenFib(n) {
+
+    if (n == 2) {
+        return [1, 2, 2];
+    } else {
+        let arrayPrev = evenFib(n - 1);
+        let currentFibVal = arrayPrev[0] + arrayPrev[1];
+        arrayPrev[0] = arrayPrev[1];
+        arrayPrev[1] = currentFibVal;
+
+        if (currentFibVal % 2 == 0 && currentFibVal < 4000000) {
+            arrayPrev[2] += currentFibVal;
+        }
+
+        return arrayPrev;
+    }
+
+}
+
+// Chat-GPT Solution
+function evenFibRecursive(a, b, limit) {
+    let nextFib = a + b;
+
+    if (nextFib > limit) {
+        return 0;  // Base case: If the next Fibonacci number exceeds limit, return 0.
+    }
+
+    // If nextFib is even, add it to the sum. Otherwise, add 0.
+    return (nextFib % 2 === 0 ? nextFib : 0) + evenFibRecursive(b, nextFib, limit);
+}
+
+// console.log(evenFib(40)[2]);
+// console.log(2 + evenFibRecursive(1, 2, 4000000));
+
+
+function isPrime (n) {
+
+    if (n <= 1) {
+        return false;  // 0 and 1 are not prime numbers
+    }
+
+    if (n == 2 || n == 3) {
+        return true;
+    }
+
+    if (n % 2 == 0 || n % 3 == 0) {
+        return false;  // multiples of 2 and 3 are not primes
+    }
+    
+    let i = 5;
+    while (i * i <= n) {
+        if (n % i == 0 || n % (i + 2) == 0)  // This checks for divisibility by numbers in the format 6k ± 1
+            return false;
+        i += 6;
+    }
+
+    return true;
+}
+
+
+function largestPrimeFactor(n) {
+
+    let highestPrimeFactor = 0;
+
+    for (let i = 2; i <= Math.sqrt(n); i++) {
+        if (isPrime(i) && (n % i == 0)) {
+            highestPrimeFactor = i;
+        } 
+    }
+
+    return highestPrimeFactor;
+}
+
+
+// console.log(largestPrimeFactor(600851475143));
+
+// Chat GPT Solution
+function largestPrimeFactorRecursive(n, divisor = 2) {
+
+    if (isPrime(n)) return n;  // If n is prime, then it is its own largest prime factor
+    
+    if (n % divisor == 0 && isPrime(divisor)) {
+        return Math.max(divisor, largestPrimeFactor(n / divisor, divisor));
+    }
+
+    return largestPrimeFactor(n, divisor + 1);
+}
+
+// My understanding: 
+// This code will recurse the value n until it is divisible by the divisor, in this case when i = 71 and when n = 8462696833 OR 600851475143/71
+// at this point, the function will call itself with the new values, whereby the new number n has to be divisible by the divisor AND
+// see if the divisor itself is a prime number
+// If not a prime number, lPF will continue to increase the value of the divisor by 1, until it has reached the point where the value that is left is indeed a prime number.
+
+// console.log(isPrime(6857))
+// console.log(largestPrimeFactorRecursive(600851475143));
+
+function isNumberPalindrome (n) {
+
+    let numStr = n.toString();
+    let reversedStr = numStr.split('').reverse().join('');
+    return numStr === reversedStr;
+    
+    // Initial implementation below:
+    // let numStr = n.toString()
+
+    // let middleIndex = Math.floor(numStr.length / 2);
+
+    // if (numStr.length % 2 == 0) {
+    //     for (let i = 0; i <= middleIndex; i++) {
+    //         if (numStr[i] != numStr[numStr.length - i - 1]) {
+    //             return false;
+    //         } 
+    //     }
+    // }
+
+    // if (numStr.length % 2 != 0) {
+    //     for (let i = 0; i < middleIndex; i++) {
+    //         if (numStr[i] != numStr[numStr.length - i - 1]) {
+    //             return false;
+    //         } 
+    //     }
+    // }
+
+    // return true;
+
+} 
+
+// console.log(isNumberPalindrome(12421))
+
+function largestPalindromeProductRecursion (num1, num2, largest) {
+
+    let n = num1 * num2;
+
+    // Set the new largest Palindrome to the value largest
+    if (isNumberPalindrome(n) ) {
+        largest = Math.max(n, largest)
+    }
+
+    // Base case
+    if (num1 < 100) {
+        return largest;
+    }
+
+    // If num2 reaches its lower bound, decrement num1 and reset num2 to 999 i.e; num1 goes from 999 -> 998... and so on. num2 restarts to 999
+    if (num2 == 100) {
+        return largestPalindromeProductRecursion(num1 - 1, num1, largest);
+    }
+
+    // Decrement num 2 from 999 -> 100
+    return largestPalindromeProductRecursion(num1, num2 - 1, largest);
+}
+
+
+function largestPalindromeProduct() {
+    let largest = 0;
+
+    let finalNum1 = 0;
+    let finalNum2 = 0;
+
+    for (let num1 = 999; num1 >= 100; num1--) {
+        for (let num2 = 999; num2 >= 100; num2--) {
+            let n = num1 * num2;
+
+            if (isNumberPalindrome(n)) {
+
+                if (n >= largest) {
+                    finalNum1 = num1;
+                    finalNum2 = num2;
+                }
+
+                largest = Math.max(n, largest);
+                
+            }
+
+        }
+    }
+
+    return [largest, finalNum1, finalNum2];
+}
+
+// console.log(largestPalindromeProduct());
+// console.log(largestPalindromeProductRecursion(999, 999, 0));
+
+
+function smallestMultipleRecursion (n = 20) {
+
+    // Checks if the number is divisible by all numbers from 1 to 20.
+    function isDivisible(num) {
+        for (let i = 11; i <= 20; i++) {
+            if (num % i !== 0) return false;
+        }
+        return true;
+    }
+
+    if (isDivisible(n)) return n;
+
+    // Increment by 20 since the result must be a multiple of 20.
+    return smallestMultipleRecursion(n + 20);
+}
+
+// console.log(smallestMultipleRecursion());
+
+function smallestMultiple(n = 20) {
+
+    let smallestValue = 0;
+
+    while(smallestValue == 0) {
+
+        for (let i = 11; i <= 20; i++) {
+            if (n % i !== 0) {
+                n += 20;
+                break;
+            }
+
+            if (i == 20 && n % i === 0) {
+                smallestValue = 1;
+            }
+        }
+    }
+
+    return n;
+}
+
+console.log(smallestMultiple());
